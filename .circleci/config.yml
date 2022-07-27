@@ -208,26 +208,33 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt 
-#       # Here's where you will add some code to rollback on failure      
+      # Here's where you will add some code to rollback on failure      
 
-#   configure-infrastructure:
-#     docker:
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Configure server
-#           command: |
-#             # Your code here
-#             exit 1
-#       # Here's where you will add some code to rollback on failure      
+  configure-infrastructure:
+    docker:
+      -image: cimg/base:stable
+    steps:
+      - checkout
+      - add_ssh_keys
+          fingerprints:
+            - "06:c5:62:ef:2c:26:3f:51:cd:b3:7b:51:32:c6:ba:d2"
+      - attach workspace:
+          at: ~/
+      # - install_ansible
+      - run:
+          name: Install Ansible
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-server.yml
+      - destroy environment
 
 #   run-migrations:
 #     docker:
