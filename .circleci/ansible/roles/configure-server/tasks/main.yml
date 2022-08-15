@@ -12,6 +12,11 @@
     state: latest
     update_cache: yes
 
+- name: install NPM
+    shell: npm i 
+    args:
+      chdir: /home/ubuntu
+
 - name: "Install PM2 Globally"
   npm:
     name: pm2
