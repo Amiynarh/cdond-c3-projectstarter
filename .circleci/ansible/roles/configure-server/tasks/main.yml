@@ -14,8 +14,8 @@
 
 - name: install NPM
   shell: npm i 
-    args:
-      chdir: /home/ubuntu
+  args:
+    chdir: /home/ubuntu
 
 - name: "Install PM2 Globally"
   npm:
