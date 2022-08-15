@@ -13,9 +13,10 @@
     update_cache: yes
 
 - name: install NPM
-  shell: sudo apt install npm
-  args:
-    chdir: /home/ubuntu
+  become: true
+  shell: |
+    sudo apt install npm
+
 
 - name: "Install PM2 Globally"
   npm:
