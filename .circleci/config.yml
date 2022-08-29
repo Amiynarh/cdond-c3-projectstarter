@@ -67,7 +67,6 @@ commands:
           when: on_fail
           # Add when this will run
           command: |
-            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS = $(curl --insecure "curl https://kvdb.io/Vk2f8BTUuXg9pmo25vWZJM/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'_<<parameters.workflow_id>>")
             if(( $SUCCESS==1 )); 
             then
@@ -75,7 +74,7 @@ commands:
              npm install
              npm run migrations:revert
             fi
-            
+    
 jobs:
   build-frontend:
     docker:
@@ -248,9 +247,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["82:eb:73:31:3b:bf:54:20:c2:29:e8:5c:42:5d:b1:e1
-
-"]
+          fingerprints: ["82:eb:73:31:3b:bf:54:20:c2:29:e8:5c:42:5d:b1:e1"]
       - attach_workspace:
           at: ~/
       - install_ansible
@@ -269,6 +266,9 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [BE-build]
+      - install_awscli
       - run:
           name: Run migrations
           command: |
