@@ -67,7 +67,7 @@ commands:
           when: on_fail
           # Add when this will run
           command: |
-            SUCCESS = $(curl --insecure "curl https://kvdb.io/Vk2f8BTUuXg9pmo25vWZJM/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'_<<parameters.workflow_id>>")
+            SUCCESS=$(curl --insecure "curl https://kvdb.io/Vk2f8BTUuXg9pmo25vWZJM/migration_<<parameters.workflow_id>>")
             if(( $SUCCESS==1 )); 
             then
              cd ~/project/backend
