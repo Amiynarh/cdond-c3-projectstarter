@@ -20,10 +20,10 @@
 #     dest: /home/ubuntu
 
 
-- name: "install package dependencies"
-  shell: |
-    cd /home/ubuntu/backend    
-    npm install 
+# - name: "install package dependencies"
+#   shell: |
+#     cd /home/ubuntu/backend    
+#     npm install 
 
 # - name: "move env variables to /etc/profile.d/"
 #   become: true
