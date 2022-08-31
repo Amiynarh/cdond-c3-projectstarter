@@ -275,8 +275,8 @@ jobs:
             cd backend
             sudo npm cache clean -f
             sudo npm install -g npm
-            sudo n stable
-            npm run migrations > migrations_dump.txt           
+            npm run migrations > migrations_dump.txt   
+            cat migrations_dump.txt        
       - run:
           name: Send migration results to memstash or kdvb
           command: |
