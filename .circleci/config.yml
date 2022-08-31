@@ -311,8 +311,7 @@ jobs:
             )
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
-            export API_URL="http://${BACKEND_IP}:3030" 
-            echo "${API_URL}"
+            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
 
        
@@ -351,7 +350,7 @@ jobs:
             npm i
             npm run build
             cd ..
-            
+
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
             cd .circleci/ansible
