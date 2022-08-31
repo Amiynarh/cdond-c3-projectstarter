@@ -67,7 +67,7 @@ commands:
           when: on_fail
           # Add when this will run
           command: |
-            SUCCESS=$(curl --insecure "curl https://kvdb.io/Vk2f8BTUuXg9pmo25vWZJM/migration_<<parameters.workflow_id>>")
+            SUCCESS=$(curl --insecure "curl https://kvdb.io/SbgbJNnfEqn7YEk3wrzhkm/migration_<<parameters.workflow_id>>")
             if(( $SUCCESS==1 )); 
             then
              cd ~/project/backend
@@ -267,14 +267,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [BE-build]
+          keys: [backend-build]
       - install_awscli
       - run:
           name: Run migrations
           command: |
             cd backend
-            sudo npm cache clean -f
-            sudo npm install -g npm
+            npm install
             npm run migrations > migrations_dump.txt   
             cat migrations_dump.txt        
       - run:
@@ -282,7 +281,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-              curl https://kvdb.io/Vk2f8BTUuXg9pmo25vWZJM/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              curl https://kvdb.io/SbgbJNnfEqn7YEk3wrzhkm/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       - destroy-environment
       - revert-migrations
